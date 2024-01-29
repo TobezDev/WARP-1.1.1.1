@@ -9,12 +9,6 @@ from pkgs.Colors import Colors
 
 used_ids = []
 
-speeds = {
-    f: 0.05,
-    a: 0.15,
-    s: 0.3
-}
-
 
 def colorInput(prompt: str):
     if prompt.lower() == 'default':
@@ -41,29 +35,27 @@ async def sleepByType(t: str, d: int):
                 .format(t) + Style.RESET_ALL)
 
 
-def typePrintWithSpeed(text: str, speed: float):
-    if speed <= 0 or speed > 0.05:
-        return ValueError("Speed Value reached one of the bounds (<= 0 and > 0.05)
-    print(Colors.TEXT_DEFAULT, end=None)
-    for char in text:
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        time.sleep(delay)
-    print('\n')
-    time.sleep(0.5)
-    
-    
-
 def typePrint(text: str, speed: str):
     if speed[0].lower() not in ['f', 'fast', 'a', 'average', 's', 'slow']:
         return ValueError(
             "Speed of function typePrint must be fast ('f'), average ('a') or slow ('s')."
         )
     else:
-        typeId = speed[0]
-        speed = speeds[typeId]
-        typePrintWithSpeed(text, speed)
-        
+        if speed in ['f', 'fast']:
+            delay = 0.05
+        elif speed in ['a', 'average']:
+            delay = 0.15
+        elif speed in ['s', 'slow']:
+            delay = 0.30
+        else:
+            return ValueError(f"{Colors.ERROR}")
+        print(Colors.TEXT_DEFAULT, end=None)
+        for char in text:
+            sys.stdout.write(char)
+            sys.stdout.flush()
+            time.sleep(delay)
+        print('\n')
+        time.sleep(0.5)
 
 
 def createName(name: str):
